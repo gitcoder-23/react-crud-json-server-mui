@@ -37,6 +37,25 @@ const List = () => {
       console.log('Something went wrong!');
     }
   };
+  const deleteStudent = async (stuId) => {
+    try {
+      // if (window.alert('Do you want?')) {
+      //   const delStudent = await axios.delete(
+      //     `${rootApiUrl}/students/${stuId}`
+      //   );
+      // }
+      // const delStudent = await axios.delete(`${rootApiUrl}/students/${stuId}`);
+      // getStudents();
+      const delStudent = await axios.delete(`${rootApiUrl}/students/${stuId}`);
+      var newStudent = studentsData.filter((item) => {
+        console.log('item', item);
+        return item.id !== stuId;
+      });
+      setStudentsData(newStudent);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
     getStudents();
   }, []);
@@ -95,13 +114,15 @@ const List = () => {
                               </Tooltip>
                               <Tooltip title="Edit">
                                 <IconButton>
-                                  <Link to="">
+                                  <Link to={`/edit/${data.id}`}>
                                     <EditIcon />
                                   </Link>
                                 </IconButton>
                               </Tooltip>
                               <Tooltip title="Delete">
-                                <IconButton>
+                                <IconButton
+                                  onClick={() => deleteStudent(data.id)}
+                                >
                                   <DeleteIcon color="secondary" />
                                 </IconButton>
                               </Tooltip>

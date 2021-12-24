@@ -11,27 +11,17 @@
       "email": "sumit@example.com"
     },
     {
-      "id": "c1ea7c48-bb54-425a-a8d2-5664999d8dce",
+      "id": "349bb132-79b9-4b09-bd6b-829d41e6e82f",
+      "stuname": "Manish",
+      "email": "manish@yahoo.com"
+    },
+    {
+      "id": "ec5d4c70-fa21-4fc0-8ecb-7cfea59a32cb",
       "stuname": "Rima",
       "email": "rima@yahoo.com"
     },
     {
-      "id": "73919746-cc32-4e33-8e3c-805ccce9d962",
-      "stuname": "Riza",
-      "email": "riza@gmail.com"
-    },
-    {
-      "id": "8c146371-af0a-477a-88a9-c6dd6a0c07e7",
-      "stuname": "Harish",
-      "email": "harish@yahoo.com"
-    },
-    {
-      "id": "aeb6d39a-de41-4172-9e95-fc2395654ca0",
-      "stuname": "Manish",
-      "email": "man@yahoo.com"
-    },
-    {
-      "id": "c119e118-1ca2-4eac-858b-5703e6041805",
+      "id": "a68d1231-4f86-465d-9ecb-ef21ffba90d5",
       "stuname": "Girish Kumar",
       "email": "girish@gg.com"
     }

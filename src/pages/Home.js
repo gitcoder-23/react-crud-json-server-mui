@@ -56,6 +56,7 @@ const Home = () => {
       try {
         const addOps = await axios.post(`${rootApiUrl}/students`, studentState);
         // console.log('addOps', addOps);
+        // for add and list auto show
         setStatus(true);
         setStudentState({
           stuname: '',

@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@mui/styles';
 import { Box, Button, Typography, Grid, TextField } from '@mui/material';
 import { deepOrange, deepPurple } from '@mui/material/colors';
+import { useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { rootApiUrl } from '../constants';
 
 const useStyles = makeStyles({
   headingColor: {
@@ -19,6 +23,56 @@ const useStyles = makeStyles({
 });
 const Edit = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const { stuId } = useParams();
+  const [loadingState, setLoadingState] = useState(false);
+
+  const [student, setStudent] = useState({
+    stuname: '',
+    email: '',
+  });
+
+  const getStudent = async () => {
+    try {
+      const oneStudent = await axios.get(`${rootApiUrl}/students/${stuId}`);
+      console.log('oneStudent', oneStudent);
+      const { data, status } = oneStudent;
+      setLoadingState(true);
+      if (status == 200) {
+        setTimeout(() => {
+          setLoadingState(false);
+          setStudent(data);
+        }, 600);
+      }
+    } catch (error) {
+      console.log('Something went wrong!');
+    }
+  };
+
+  const onTextFieldChange = (e) => {
+    setStudent({
+      ...student,
+      [e.target.name]: e.target.value,
+    });
+    // console.log('onTextFieldChange', student);
+  };
+
+  const upDateSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const updateApi = await axios.put(
+        `${rootApiUrl}/students/${stuId}`,
+        student
+      );
+      history.push('/');
+    } catch (error) {
+      console.log('Something went worong!');
+    }
+  };
+  React.useEffect(() => {
+    getStudent();
+  }, [stuId]);
+
   return (
     <>
       <Box
@@ -34,10 +88,30 @@ const Edit = () => {
         <Grid container spacing={2}>
           <Grid item md={6} xs={12}>
             <Box textAlign="center" p={2} mb={2} className={classes.addHead}>
-              <Typography variant="h4">Add Student</Typography>
+              <Typography variant="h4">Edit Student</Typography>
+              <Button variant="contained" onClick={() => history.push('/')}>
+                Back To Home
+              </Button>
             </Box>
 
             <Box component="form" sx={{ p: 2, border: '1px dashed grey' }}>
+              <Grid container spacing={2} mb={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    id="id"
+                    name="id"
+                    label="Student Id"
+                    variant="outlined"
+                    autoFocus
+                    required
+                    fullWidth
+                    disabled
+                    // value={student.id}
+                    value={stuId}
+                  />
+                </Grid>
+              </Grid>
+
               <Grid container spacing={2} mb={2}>
                 <Grid item xs={12}>
                   <TextField
@@ -49,6 +123,8 @@ const Edit = () => {
                     required
                     fullWidth
                     autoComplete="stuname"
+                    value={student.stuname}
+                    onChange={(e) => onTextFieldChange(e)}
                   />
                 </Grid>
               </Grid>
@@ -63,17 +139,20 @@ const Edit = () => {
                     required
                     fullWidth
                     autoComplete="email"
+                    value={student.email}
+                    onChange={(e) => onTextFieldChange(e)}
                   />
                 </Grid>
               </Grid>
               <Box m={3}>
                 <Button
-                  type="submit"
+                  type="button"
                   variant="contained"
                   color="primary"
                   fullWidth
+                  onClick={(e) => upDateSubmit(e)}
                 >
-                  ADD
+                  UPDATE
                 </Button>
               </Box>
             </Box>
