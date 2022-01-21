@@ -67,6 +67,7 @@ const Home = () => {
       }
     }
   };
+  // After adding/ Insert data auto add and displayed under list
   if (status) {
     return <Home />;
   }
